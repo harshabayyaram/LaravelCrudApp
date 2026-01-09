@@ -54,7 +54,7 @@ onMounted(() => {
 
 <template>
     <div class="text-white">
-        <h2 class="d-flex justify-content-center py-4">HOME</h2>
+        <h2 class="d-flex justify-content-center py-4">ASSETS</h2>
         <!-- <router-link to="/test"> Take me to Test page </router-link> -->
     </div>
 
@@ -63,7 +63,7 @@ onMounted(() => {
             <b-button variant="success px-5" @click=createItem()>Create</b-button>
         </div>
         <div class="p-2 shadow-lg">
-            <table class="table table-striped table-hover table-bordered text-center text-white table-dark ">
+            <table class="table table-striped table-hover table-bordered text-center text-white table-dark text-wrap-table">
                 <thead>
                     <tr class="table-info text-dark">
                         <!-- <th>ID</th> -->
@@ -78,10 +78,10 @@ onMounted(() => {
                 <tbody>
                     <tr v-for="(item, index) in responseData" :key="item.id">
                         <!-- <td>{{ item.id }}</td> -->
-                        <td>{{ index + 1 }}</td>
-                        <td>{{ item.name }}</td>
+                        <td >{{ index + 1 }}</td>
+                        <td class="text-wrap text-break text-truncate" style="max-width: 200px;">{{ item.name }}</td>
                         <td>{{ item.code }}</td>
-                        <td>{{ item.description }}</td>
+                        <td class="text-wrap text-break" >{{ item.description }}</td>
                         <td>{{ item.status }}</td>
                         <td>
                             <b-button variant="primary" class="m-2" @click=updateItem(item)>Update</b-button>
