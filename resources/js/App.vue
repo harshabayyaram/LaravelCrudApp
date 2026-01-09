@@ -1,5 +1,37 @@
 <template>
-    <h2>
-        Vue Template HARSha test good *
-    </h2>
+    <div class="bg-app text-white">
+        <BOrchestrator />
+        <router-view v-slot="{ Component }">
+            <component :is="Component" />
+        </router-view>
+    </div>
 </template>
+
+<script setup>
+import { BOrchestrator } from 'bootstrap-vue-next'
+</script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100%;
+}
+
+#app {
+  min-height: 100%;
+}
+
+
+.bg-app {
+    height: 100vh;
+    display: block;
+    object-fit: fill;
+    background: url('/public/images/futuristic-style-digital-technology-square-background-free-vector.jpg') center / cover no-repeat;
+}
+</style>
