@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 
 class Item extends Model
 {
-
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -20,16 +19,14 @@ class Item extends Model
         'code',
         'status'
     ];
-    // Automatically generate UUID
+
     protected static function boot()
     {
         parent::boot();
-
         static::creating(function ($model) {
             if (!$model->id) {
                 $model->id = (string) Str::uuid();
             }
         });
     }
-
 }
