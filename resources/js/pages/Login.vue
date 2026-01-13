@@ -14,7 +14,7 @@ const form = ref({
 const errors = ref({})
 
 const login = async () => {
-    errors.value = {} // reset previous errors
+    errors.value = {}
 
     try {
         const response = await axios.post('/api/login', form.value)
@@ -41,18 +41,15 @@ const login = async () => {
     <div class="container mt-5 col-md-4">
         <h3>Login</h3>
 
-        <!-- General errors -->
         <div v-if="errors.general" class="alert alert-danger">
             <div v-for="(err, i) in errors.general" :key="i">{{ err }}</div>
         </div>
 
-        <!-- Email input -->
         <div class="mb-2">
             <input v-model="form.email" class="form-control" placeholder="Email" />
             <small v-if="errors.email" class="text-danger">{{ errors.email[0] }}</small>
         </div>
 
-        <!-- Password input -->
         <div class="mb-3">
             <input v-model="form.password" type="password" class="form-control" placeholder="Password" />
             <small v-if="errors.password" class="text-danger">{{ errors.password[0] }}</small>

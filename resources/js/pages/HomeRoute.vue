@@ -39,7 +39,6 @@ const filteredItems = computed(() => {
 </script>
 
 <template>
-
     <div class="d-flex flex-column py-4">
         <div class="d-flex justify-content-between align-items-center mt-3 px-2">
             <div class="d-flex align-items-center gap-2 flex-grow-1 me-3">
@@ -55,13 +54,10 @@ const filteredItems = computed(() => {
                     Reset
                 </b-button>
             </div>
-
             <b-button variant="success" size="sm" class="px-4 m-2" @click="openCreateModal()" style="width: 300px;">
                 Create
             </b-button>
-
         </div>
-
 
         <div class="p-2 shadow-lg">
             <table
