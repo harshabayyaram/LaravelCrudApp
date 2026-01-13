@@ -1,6 +1,6 @@
 <script setup>
 import { BButton, BModal, BTable } from "bootstrap-vue-next";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import FetchItems from "../functions/FetchItems";
 import CreateItem from '../functions/CreateItem'
 import DeleteItem from "../functions/DeleteItem";
@@ -16,13 +16,53 @@ onMounted(() => {
     getAllItems();
 });
 
+const filters = ref({
+    search: "",
+    status: ""
+})
+
+const filteredItems = computed(() => {
+    return items.value.filter(item => {
+        const matchesSearch =
+            !filters.value.search ||
+            item.name.toLowerCase().includes(filters.value.search.toLowerCase()) ||
+            item.code.toLowerCase().includes(filters.value.search.toLowerCase());
+
+        const matchesStatus =
+            !filters.value.status ||
+            item.status === filters.value.status;
+
+        return matchesSearch && matchesStatus;
+    });
+});
+
 </script>
 
 <template>
+
     <div class="d-flex flex-column py-4">
-        <div class="d-flex  justify-content-end mr-4">
-            <b-button variant="success px-5" @click=openCreateModal()>Create</b-button>
+        <div class="d-flex justify-content-between align-items-center mb-3 px-2">
+            <div class="d-flex align-items-center gap-2 flex-grow-1 me-3">
+                <input v-model="filters.search" type="text" class="form-control form-control-sm bg-dark text-white m-2"
+                    placeholder="Search by name or code" style="max-width: 320px;" />
+                <select v-model="filters.status" class="form-select form-select-sm bg-dark text-white border-secondary"
+                    style="width: 120px; height: calc(1em + 0.5rem + 2px);">
+                    <option value="">All status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+                <b-button size="sm" variant="outline-secondary" @click="filters.search = ''; filters.status = ''" class="m-2">
+                    Reset
+                </b-button>
+            </div>
+
+            <b-button variant="success" size="sm" class="px-4" @click="openCreateModal()">
+                Create
+            </b-button>
+
         </div>
+
+
         <div class="p-2 shadow-lg">
             <table
                 class="table table-striped table-hover table-bordered text-center text-white table-dark text-wrap-table">
@@ -38,7 +78,7 @@ onMounted(() => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in items" :key="item.id">
+                    <tr v-for="(item, index) in filteredItems" :key="item.id">
                         <!-- <td>{{ item.id }}</td> -->
                         <td>{{ index + 1 }}</td>
                         <td class="text-wrap text-break text-truncate" style="max-width: 200px;">{{ item.name }}</td>
