@@ -35,7 +35,6 @@ class ItemsController extends Controller
         return response()->json($item, 201);
     }
 
-
     public function show($id)
     {
         $item = Item::findOrFail($id);

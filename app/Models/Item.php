@@ -13,7 +13,6 @@ class Item extends Model
 
     use HasFactory;
     protected $fillable = [
-        'id',
         'name',
         'description',
         'code',
@@ -24,7 +23,7 @@ class Item extends Model
     {
         parent::boot();
         static::creating(function ($model) {
-            if (!$model->id) {
+            if (!$model->getKey()) {
                 $model->id = (string) Str::uuid();
             }
         });

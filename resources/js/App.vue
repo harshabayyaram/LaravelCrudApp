@@ -1,6 +1,7 @@
 <template>
     <div class="bg-app text-white">
         <BOrchestrator />
+        <Navbar />
         <router-view v-slot="{ Component }">
             <component :is="Component" />
         </router-view>
@@ -9,6 +10,7 @@
 
 <script setup>
 import { BOrchestrator } from 'bootstrap-vue-next'
+import Navbar from './pages/Navbar.vue';
 </script>
 
 <style>
