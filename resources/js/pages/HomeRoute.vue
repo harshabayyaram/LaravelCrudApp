@@ -41,7 +41,7 @@ const filteredItems = computed(() => {
 <template>
 
     <div class="d-flex flex-column py-4">
-        <div class="d-flex justify-content-between align-items-center mb-3 px-2">
+        <div class="d-flex justify-content-between align-items-center mt-3 px-2">
             <div class="d-flex align-items-center gap-2 flex-grow-1 me-3">
                 <input v-model="filters.search" type="text" class="form-control form-control-sm bg-dark text-white m-2"
                     placeholder="Search by name or code" style="max-width: 320px;" />
@@ -56,7 +56,7 @@ const filteredItems = computed(() => {
                 </b-button>
             </div>
 
-            <b-button variant="success" size="sm" class="px-4" @click="openCreateModal()">
+            <b-button variant="success" size="sm" class="px-4 m-2" @click="openCreateModal()" style="width: 300px;">
                 Create
             </b-button>
 
