@@ -7,10 +7,19 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 use App\Models\Item;
+use App\Models\User;
 
 class ItemsAPITest extends TestCase
 {
     use RefreshDatabase;
+    protected $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+        $this->actingAs($this->user, 'sanctum');
+    }
 
     public function test_example(): void
     {
