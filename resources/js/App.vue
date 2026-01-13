@@ -26,14 +26,26 @@ body {
 }
 
 #app {
-  min-height: 100%;
+    min-height: 100%;
 }
 
+
+/* .bg-app {
+    height: 100vh;
+    display: block;
+    object-fit: fill;
+    background: url('/public/images/futuristic-style-digital-technology-square-background-free-vector.jpg') center / cover no-repeat;
+} */
 
 .bg-app {
     height: 100vh;
     display: block;
     object-fit: fill;
-    background: url('/public/images/futuristic-style-digital-technology-square-background-free-vector.jpg') center / cover no-repeat;
+
+    /* Dark radial gradient: center dark gray to edges black */
+    background: radial-gradient(circle, #0a0f2c 0%, #07102a 70%, #000018 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 </style>

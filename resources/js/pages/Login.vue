@@ -2,26 +2,37 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { auth } from '../functions/Auth'
 
-const email = ref('')
-const password = ref('')
-const error = ref(null)
 const router = useRouter()
 
-const login = async () => {
-    try {
-        const response = await axios.post('/api/login', {
-            email: email.value,
-            password: password.value
-        })
+const form = ref({
+    email: '',
+    password: ''
+})
 
-        localStorage.setItem('token', response.data.token)
+const errors = ref({})
+
+const login = async () => {
+    errors.value = {} // reset previous errors
+
+    try {
+        const response = await axios.post('/api/login', form.value)
+
+        // localStorage.setItem('token', response.data.token)
+        auth.setToken(response.data.token)
         axios.defaults.headers.common['Authorization'] =
             `Bearer ${response.data.token}`
 
         router.push('/')
     } catch (e) {
-        error.value = 'Invalid credentials'
+        if (e.response?.status === 422) {
+            errors.value = e.response.data.errors || {}
+        } else if (e.response?.status === 401) {
+            errors.value.general = ['Invalid credentials']
+        } else {
+            errors.value.general = ['Something went wrong']
+        }
     }
 }
 </script>
@@ -30,10 +41,22 @@ const login = async () => {
     <div class="container mt-5 col-md-4">
         <h3>Login</h3>
 
-        <div v-if="error" class="alert alert-danger">{{ error }}</div>
+        <!-- General errors -->
+        <div v-if="errors.general" class="alert alert-danger">
+            <div v-for="(err, i) in errors.general" :key="i">{{ err }}</div>
+        </div>
 
-        <input v-model="email" class="form-control mb-2" placeholder="Email" />
-        <input v-model="password" type="password" class="form-control mb-3" placeholder="Password" />
+        <!-- Email input -->
+        <div class="mb-2">
+            <input v-model="form.email" class="form-control" placeholder="Email" />
+            <small v-if="errors.email" class="text-danger">{{ errors.email[0] }}</small>
+        </div>
+
+        <!-- Password input -->
+        <div class="mb-3">
+            <input v-model="form.password" type="password" class="form-control" placeholder="Password" />
+            <small v-if="errors.password" class="text-danger">{{ errors.password[0] }}</small>
+        </div>
 
         <button class="btn btn-primary w-100" @click="login">Login</button>
     </div>
