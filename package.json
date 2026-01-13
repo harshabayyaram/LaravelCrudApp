@@ -18,6 +18,7 @@
     "dependencies": {
         "@vitejs/plugin-vue": "^6.0.3",
         "bootstrap": "^4.6.2",
+        "bootstrap-icons": "^1.13.1",
         "bootstrap-vue-next": "^0.42.0",
         "vue": "^3.5.26",
         "vue-axios": "^3.5.2",

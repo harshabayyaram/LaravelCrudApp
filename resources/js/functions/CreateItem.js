@@ -10,7 +10,7 @@ export default function CreateItem(items) {
         description: "",
         status: "active",
     });
-
+    const errors = ref({});
     const openCreateModal = () => {
         newItem.value = {
             name: "",
@@ -18,10 +18,13 @@ export default function CreateItem(items) {
             description: "",
             status: "active",
         };
+        errors.value = {};
         createModal.value = true;
     };
 
-    const confirmCreate = async () => {
+    const confirmCreate = async (event) => {
+        event.preventDefault();
+        errors.value = {};
         try {
             const response = await axios.post("/api/items", newItem.value);
             items.value.unshift(response.data);
@@ -29,6 +32,11 @@ export default function CreateItem(items) {
             createModal.value = false;
         } catch (error) {
             console.log(error);
+            if (error.response?.status === 422) {
+                errors.value = error.response.data.errors || {};
+            } else {
+                console.log(error);
+            }
         }
     };
 
@@ -37,5 +45,6 @@ export default function CreateItem(items) {
         newItem,
         openCreateModal,
         confirmCreate,
+        errors
     };
 }
